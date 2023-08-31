@@ -1,0 +1,41 @@
+use('Geografico');
+
+
+// Métodos usados com find():
+// .count()     |   .limit()
+// .sort()      |   .skip()
+
+
+// Conta o total de registros de muinicípios
+db.municipios.find().count();
+
+// Todos os estados que começam com Rio
+db.estados.find({nome: /^Rio/i}, { _id: 0, uf: 1, nome: 1 });
+
+// Todos os estados que terminam com Sul
+db.estados.find({nome: /Sul$/i}, { _id: 0, uf: 1, nome: 1 });
+
+// Todos os estados que contém a palavra grosso
+db.estados.find({nome: /grosso/i}, { _id: 0, uf: 1, nome: 1 });
+
+// Todos os municípios que terminam com 'tu'
+// ordenados por ordem crescente
+// retornando 5 resultados e pulando 5
+use('Geografico');
+db.municipios
+  .find({nome: /tu$/i}, { _id: 0, uf: 1, nome: 1 })
+  .sort({ nome: 1 })
+  .limit(5)
+  .skip(5)
+;
+
+// Apaga todos os municípios que terminem em Itu
+db.municipios.deleteMany({nome: /Itu$/i});
+
+// Exemplo de Update
+// Cria ou Altera coluna 'excluido' para true
+use('Geografico')
+db.municipios.updateMany({nome: /Capivari/i}, {$set: {excluido: true}});
+
+use('Geografico')
+db.municipios.find({nome: /Capivari/i});

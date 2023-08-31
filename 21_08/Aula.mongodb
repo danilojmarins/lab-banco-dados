@@ -1,0 +1,128 @@
+// criar novo ou usar database
+use('projetodb');
+
+// insert
+db.filmes.insertOne({
+    "titulo": "Star Wars",
+    "ano": 1978,
+    "diretor": "George Lucas"
+});
+
+
+use('projetodb');
+db.filmes.find(); // select * from filmes;
+
+
+use('projetodb');
+db.filmes.insertOne({
+    "titulo": "🦁👑",
+    "ano": 1994,
+    "diretor": "Roger Allens",
+    "titulo-ar": "الأسد الملك"
+});
+
+
+use('projetodb');
+db.filmes.insertMany([
+    {
+        "titulo": "O Exorcista",
+        "ano": "1973",
+        "diretor": "William Frienkin"
+    },
+    {
+        "titulo": "007 - Sem Tempo para Morrer",
+        "ano": 2020,
+        "diretor": "Cary Joji Fukunaga"
+    }
+]);
+
+
+// select titulo, ano from ...
+use("projetodb");
+db.filmes.find({}, { "_id": 0, "titulo": 1, "ano": 1 });
+
+
+// select titulo, ano from ... where ano = 1978;
+use("projetodb");
+db.filmes.find({ "ano": 1978 }, { "_id": 0, "titulo": 1, "ano": 1 });
+
+
+// OPERADORES DE COMPARAÇÃO MONGODB
+
+// ano entre 1970 - 1990
+use("projetodb");
+db.filmes.find(
+    { "ano": { $gte: 1970, $lte: 1990 } },
+    { _id: 0, titulo: 1, ano: 1 }
+);
+
+
+// diretor = 'George Lucas'
+use("projetodb");
+db.filmes.find(
+    { "diretor": { $eq: "George Lucas" } },
+    { _id: 0, titulo: 1, ano: 1 }
+);
+
+
+// ano = 1973 ou 1978 ou 2020
+use("projetodb");
+db.filmes.find(
+    { "ano": { $in: [1973, 1978, 2020] } },
+    { _id: 0, titulo: 1, ano: 1 }
+);
+
+
+// OPERADORES LÓGICOS MONGODB
+
+// titulo != 'Star Wars' && ano > 1980
+use("projetodb");
+db.filmes.find(
+    { $and: [{titulo: { $ne: "Star Wars" }}, {ano: { $gt: 1980 }}]},
+    { _id: 0, titulo: 1, ano: 1 }
+);
+
+
+// titulo == 'Star Wars' || ano > 1980
+use("projetodb");
+db.filmes.find(
+    { $or: [{"titulo": { $eq: "Star Wars" }}, {"ano": { $gt: 1980 }} ]},
+    { _id: 0, titulo: 1, ano: 1 }
+);
+
+
+// EXPRESSÕES REGULARES
+
+// i = insensitive case
+use("projetodb");
+db.filmes.find({ titulo: /star wars/i });
+
+
+// ^ = começa com
+use("projetodb");
+db.filmes.find({ titulo: /^sta/i });
+
+
+// $ = termina com
+use("projetodb");
+db.filmes.find({ titulo: /wars$/i });
+
+
+// SORT -> ORDER BY
+
+// 1 = ASC | -1 = DESC
+// ORDER BY titulo
+use("projetodb");
+db.filmes
+    .find({}, { titulo: 1, ano: 1, _id: 0 })
+    .sort({ titulo: 1 })
+;
+
+
+// titulo contem 🦁 ou ano entre 1970 - 1990
+// ordenado pelo ano em ordem crescente
+use("projetodb");
+db.filmes
+    .find({ $or: [{titulo: /🦁/}, {ano: {$gt: 1970, $lt: 1990}}] })
+    .sort({ ano: 1 })
+;

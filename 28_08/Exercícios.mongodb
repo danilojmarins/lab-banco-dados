@@ -1,0 +1,54 @@
+// Exercício 1
+use('Geografico');
+db.municipios
+    .find(
+        {latitude: { $gte: -17, $lte: -15 }},
+        { _id: 0, nome: 1, latitude: 1 }
+    )
+;
+
+// Exercício 2
+use('Geografico');
+db.municipios
+    .find({$or: [
+        {capital: true },
+        {codigo_uf: 52}
+    ]}, {_id: 0})
+;
+
+// Exercício 3
+use('Geografico');
+db.municipios
+    .find({$and: [
+        {nome: /Goi[áaã]s/i},
+        {latitude: {$lte: -16.8}}
+    ]}, {_id: 0})
+;
+
+// Exercício 4
+use('Geografico');
+db.municipios
+    .find({}, {_id: 0})
+    .sort({latitude: 1, longitude: -1})
+    .skip(3)
+    .limit(4)
+;
+
+// Exercício 5
+use('Geografico');
+db.municipios
+    .find({$or: [
+        {longitude: {$lt: -50}},
+        {codigo_uf: {$in: [52, 53]}}
+    ]}, {_id: 0})
+    .sort({nome: 1})
+;
+
+// Exercício 6
+use('Geografico');
+db.municipios
+    .deleteMany({$and: [
+        {latitude: {$lt: -16.5}},
+        {longitude: {$gt: -49}}]}
+    )
+;
