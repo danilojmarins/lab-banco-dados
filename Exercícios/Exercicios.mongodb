@@ -49,3 +49,126 @@ db.restaurantes.find(
 // 5
 use('Exercicios');
 db.restaurantes.find({ bairro: /Bronx/i });
+
+
+// 6
+use('Exercicios');
+db.restaurantes.find({ bairro: /Bronx/i }).limit(5);
+
+
+// 7
+use('Exercicios');
+db.restaurantes.find({ bairro: /Bronx/i }).skip(5).limit(5);
+
+
+// 8
+use('Exercicios');
+db.restaurantes.find({
+    avaliações: {
+        $elemMatch: {
+            pontos: {
+                $gt: 90
+            }
+        }
+    }
+});
+
+
+// 9
+use('Exercicios');
+db.restaurantes.find({
+    avaliações: {
+        $elemMatch: {
+            pontos: {
+                $gt: 80, $lt: 100
+            }
+        }
+    }
+});
+
+
+// 10
+use('Exercicios');
+db.restaurantes.find({
+    'endereço.coord': {
+        $lt: -95.754168
+    }
+});
+
+
+// 11
+use('Exercicios');
+db.restaurantes.find({
+    $and: [
+        {
+            cozinha: { $ne: 'American' }
+        },
+        {
+            avaliações: {
+                $elemMatch: {
+                    pontos: { $gte: 70 }
+                }
+            }
+        },
+        {
+            'endereço.coord': {
+                $lt: -65.754168
+            }
+        }
+    ]
+});
+
+
+// 12
+use('Exercicios');
+db.restaurantes.find({    
+    cozinha: { $ne: 'American' }, 
+    avaliações: {
+        $elemMatch: {
+            pontos: { $gte: 70 }
+        }
+    },  
+    'endereço.coord': {
+        $lt: -65.754168
+    }
+});
+
+
+// 13
+use('Exercicios');
+db.restaurantes
+    .find({    
+        cozinha: { $ne: 'American' }, 
+        avaliações: {
+            $elemMatch: {
+                nota: 'A'
+            }
+        },  
+        bairro: { $ne: 'Brooklyn' }
+    })
+    .sort({ cozinha: -1 })
+;
+
+
+// 14
+use('Exercicios');
+db.restaurantes.find(
+    { nome: /^Wil/ },
+    { nome: 1, bairro: 1, cozinha: 1 }
+);
+
+
+// 15
+use('Exercicios');
+db.restaurantes.find(
+    { nome: /ces$/ },
+    { nome: 1, bairro: 1, cozinha: 1 }
+);
+
+
+// 16
+use('Exercicios');
+db.restaurantes.find(
+    { nome: /Reg/ },
+    { nome: 1, bairro: 1, cozinha: 1 }
+);
