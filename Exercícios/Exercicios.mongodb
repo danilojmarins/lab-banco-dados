@@ -172,3 +172,35 @@ db.restaurantes.find(
     { nome: /Reg/ },
     { nome: 1, bairro: 1, cozinha: 1 }
 );
+
+
+// 17
+use('Exercicios');
+db.restaurantes.find({
+    bairro: 'Bronx',
+    $or: [{cozinha: /American/}, {cozinha: /Chinese/}]
+});
+
+
+// 18
+use('Exercicios');
+db.restaurantes.find(
+    { bairro: { $in: ['Staten Island', 'Queens', 'Bronx', 'Brooklyn'] } },
+    { nome: 1, bairro: 1, cozinha: 1 }
+);
+
+
+// 19
+use('Exercicios');
+db.restaurantes.find(
+    { bairro: { $nin: ['Staten Island', 'Queens', 'Bronx', 'Brooklyn'] } },
+    { nome: 1, bairro: 1, cozinha: 1 }
+);
+
+
+// 20
+use('Exercicios');
+db.restaurantes.find(
+    { avaliações: { $not: { $elemMatch: { pontos: { $gt: 10 } } } } },
+    { nome: 1, bairro: 1, cozinha: 1 }
+);
